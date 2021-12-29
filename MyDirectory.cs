@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 
 namespace FileManager
 {
@@ -27,7 +29,33 @@ namespace FileManager
             return _fullPath;
         }
 
-        public string GetContent()
+        // public string GetContent()
+        // {
+        //     string resultStr = "";
+        //
+        //     DirectoryInfo[] directories = _directory.GetDirectories();
+        //     FileInfo[] files = _directory.GetFiles();
+        //     
+        //     directories = directories.Where(d => !d.Attributes.HasFlag(FileAttributes.Hidden)).ToArray();
+        //     files = files.Where(f => !f.Attributes.HasFlag(FileAttributes.Hidden)).ToArray();
+        //     
+        //     foreach (var directory in directories)
+        //     {
+        //         resultStr += $"{directory.CreationTime}\t<DIR>\t{directory.Name}\n";
+        //     }
+        //
+        //     foreach (var file in files)
+        //     {
+        //         resultStr += $"{file.CreationTime}\t{file.Length}\t{file.Name}\n";
+        //     }
+        //     
+        //     resultStr += $"\t{files.Length} files\n";
+        //     resultStr += $"\t{directories.Length} folders";
+        //     
+        //     return resultStr;
+        // }
+
+        public string GetContent(string[] flags)
         {
             string resultStr = "";
             long allFilesSize = 0;
@@ -35,21 +63,70 @@ namespace FileManager
             DirectoryInfo[] directories = _directory.GetDirectories();
             FileInfo[] files = _directory.GetFiles();
 
-            foreach (var directory in directories)
+            if (!flags.Contains("h"))
             {
-                resultStr += $"{directory.CreationTime}\t<DIR>\t{directory.Name}\n";
+                directories = directories.Where(d => !d.Attributes.HasFlag(FileAttributes.Hidden)).ToArray();
+                files = files.Where(f => !f.Attributes.HasFlag(FileAttributes.Hidden)).ToArray();
             }
 
-            foreach (var file in files)
+            if (flags.Contains("sn"))
             {
-                resultStr += $"{file.CreationTime}\t{file.Length}\t{file.Name}\n";
-                allFilesSize += file.Length;
+                directories = directories.OrderBy(d => d.Name).ToArray();
+                files = files.OrderBy(s => s.Name).ToArray();
             }
 
-            resultStr += $"\t\t{files.Length} files";
-            resultStr += allFilesSize != 0 ? $" — {allFilesSize}\n" : "\n";
+            if (flags.Contains("ss"))
+            {
+                files = files.OrderBy(s => s.Length).ToArray();
+            }
 
-            resultStr += $"\t\t{directories.Length} folders";
+            if (flags.Contains("sd"))
+            {
+                directories = directories.OrderByDescending(d => d.LastWriteTime).ToArray();
+                files = files.OrderByDescending(s => s.LastWriteTime).ToArray();
+            }
+
+            if (flags.Contains("t"))
+            {
+                foreach (var directory in directories)
+                {
+                    resultStr += $"<DIR> {directory.Name}\n\t— Creation time: {directory.CreationTime}\n\t— Last update: {directory.LastWriteTime}\n";
+                }
+
+                resultStr += "\n";
+                
+                foreach (var file in files)
+                {
+                    resultStr +=
+                        $"{file.Name}\n\t— Size: {file.Length}\n\t— Extension: {file.Extension}\n\t— Creation time: {file.CreationTime}\n\t— Last update: {file.LastWriteTime}\n";
+                    
+                    if (file.Extension is ".jpg" or ".png" or ".bmp" or ".gif" or ".tif")
+                    {
+                        var bmp = new Bitmap(file.FullName);
+                        resultStr += $"\t— Resolution: {bmp.Width} x {bmp.Height}\n";
+                    }
+                        
+                    allFilesSize += file.Length;
+                }
+            }
+            else
+            {
+                foreach (var directory in directories)
+                {
+                    resultStr += $"{directory.LastWriteTime}\t<DIR>\t{directory.Name}\n";
+                }
+
+                foreach (var file in files)
+                {
+                    resultStr += $"{file.LastWriteTime}\t{file.Length}\t{file.Name}\n";
+                    allFilesSize += file.Length;
+                }
+            }
+            
+            resultStr += $"{files.Length} files";
+            resultStr += allFilesSize != 0 ? $" — {allFilesSize} bytes\n" : "\n";
+
+            resultStr += $"{directories.Length} folders";
             
             return resultStr;
         }
