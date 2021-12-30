@@ -24,7 +24,7 @@ namespace FileManager
                 
                 Helper.ParseInputString(inputText, out var inputCommand,out var inputArguments, out var inputFlags);
 
-                if (inputCommand is "view" or "find" or "cd")
+                if (inputCommand is "view" or "find" or "cd" or "del")
                 {
                     inputArguments[0] = Helper.CheckPath(inputArguments[0], currentDirectory.GetFullPath());
                     if (inputArguments[0] == "")
@@ -34,6 +34,7 @@ namespace FileManager
                     }
                 }
 
+                bool response;
                 switch (inputCommand)
                 {
                     case "dir":
@@ -61,10 +62,16 @@ namespace FileManager
                         currentDirectory = new MyDirectory(pathToNewDir);
                         break;
                     case "mkfile":
-                        var response = currentDirectory.MakeFile(inputArguments[0]);
+                        response = currentDirectory.MakeFile(inputArguments[0]);
                         Console.WriteLine(response
                             ? $"File {inputArguments[0]} successfully created!"
                             : "File already exist!");
+                        break;
+                    case "del":
+                        response = currentDirectory.Delete(inputArguments[0]);
+                        Console.WriteLine(response
+                            ? "Successfully deleted!"
+                            : "Object does not existed!");
                         break;
                     default:
                         Console.WriteLine("Command not found!");

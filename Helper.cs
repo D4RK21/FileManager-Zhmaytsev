@@ -58,6 +58,7 @@ namespace FileManager
 
         public static string CheckPath(string path, string directory)
         {
+            // Delete if
             if (!path.Contains(':'))
             {
                 path = Path.Combine(directory, path);

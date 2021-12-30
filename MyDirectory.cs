@@ -155,6 +155,22 @@ namespace FileManager
             File.Create(pathToNewFile);
             return true;
         }
+
+        public bool Delete(string path)
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+                return true;
+            }
+            if (Directory.Exists(path))
+            {
+                Directory.Delete(path, true);
+                return true;
+            }
+            
+            return false;
+        }
         
         public void Dispose()
         {
