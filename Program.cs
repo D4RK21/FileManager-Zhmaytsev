@@ -8,7 +8,7 @@ namespace FileManager
     {
         static void Main(string[] args)
         {
-            var currentDirectory = new MyDirectory(@"../../../");
+            using var currentDirectory = new MyDirectory(@"../../../");
 
             while (true)
             {
@@ -23,22 +23,37 @@ namespace FileManager
                 string[] inputTextArr = inputText.Split(' ');
                 
                 Helper.ParseInputString(inputText, out var inputCommand,out var inputArguments, out var inputFlags);
-                
-                // if (inputText.Contains('"'))
-                // {
-                //     
-                // }
-                // else
-                // {
-                //     inputCommand = inputTextArr[0].ToLower();
-                //     inputArguments = inputTextArr[1];
-                //     inputFlags = inputTextArr[2].ToLower();
-                // }
+
+                if (inputCommand is "view" or "find")
+                {
+                    inputArguments[0] = Helper.CheckPath(inputArguments[0], currentDirectory.GetFullPath());
+                    if (inputArguments[0] == "")
+                    {
+                        Console.WriteLine("Invalid path!");
+                        continue;
+                    }
+                }
 
                 switch (inputCommand)
                 {
                     case "dir":
                         Console.WriteLine(currentDirectory.GetContent(inputFlags));
+                        break;
+                    case "view":
+                        using (var file = new MyFile(inputArguments[0]))
+                        {
+                            Console.WriteLine(file.View(200));
+                        }
+                        break;
+                    case "find":
+                        using (var file = new MyFile(inputArguments[0]))
+                        {
+                            Console.WriteLine(file.IsSubstrExistInFile(inputArguments[1]));
+                        }
+                        break;
+                    
+                    default:
+                        Console.WriteLine("Command not found!");
                         break;
                 }
             }
