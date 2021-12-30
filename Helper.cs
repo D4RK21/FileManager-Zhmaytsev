@@ -58,25 +58,14 @@ namespace FileManager
 
         public static string CheckPath(string path, string directory)
         {
-            // Delete if
-            if (!path.Contains(':'))
-            {
-                path = Path.Combine(directory, path);
-            }
+            path = Path.Combine(directory, path);
 
             if (Directory.Exists(path) || File.Exists(path))
             {
                 return path;
             }
-            else
-            {
-                return "";
-            }
-        }
-        
-        public static void SortByFlag()
-        {
             
+            return "";
         }
     }
 }

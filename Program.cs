@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Drawing;
 
 namespace FileManager
 {
@@ -8,6 +6,10 @@ namespace FileManager
     {
         static void Main(string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Type \"help\" to get list of commands");
+            Console.ResetColor();
+            
             var currentDirectory = new MyDirectory(@"../../../");
 
             while (true)
@@ -20,7 +22,6 @@ namespace FileManager
 
                 string inputText = Console.ReadLine()?.Trim();
                 if (string.IsNullOrEmpty(inputText)) continue;
-                string[] inputTextArr = inputText.Split(' ');
                 
                 Helper.ParseInputString(inputText, out var inputCommand,out var inputArguments, out var inputFlags);
 
@@ -78,6 +79,24 @@ namespace FileManager
                         Console.WriteLine(response
                             ? "Successfully renamed!"
                             : "Object does not exist!");
+                        break;
+                    case "help":
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("\tAvailable commands:");
+                        Console.ResetColor();
+
+                        Console.WriteLine("—dir - Outputting directory content");
+                        Console.WriteLine("    flag -h for showing hidden files");
+                        Console.WriteLine("    flag -sn for sorting by name");
+                        Console.WriteLine("    flag -sl for sorting by size");
+                        Console.WriteLine("    flag -sd for sorting by time");
+                        Console.WriteLine("    flag -t for outputting in the form of tree");
+                        Console.WriteLine("—view - View first 200 symbols of file content");
+                        Console.WriteLine("—find - Is substring exist in file");
+                        Console.WriteLine("—mkdir - Make directory");
+                        Console.WriteLine("—mkfile - Make file");
+                        Console.WriteLine("—del - Delete directory or file");
+                        Console.WriteLine("—ren - Rename directory or file");
                         break;
                     default:
                         Console.WriteLine("Command not found!");

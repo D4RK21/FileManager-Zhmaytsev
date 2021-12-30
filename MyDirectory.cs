@@ -29,32 +29,6 @@ namespace FileManager
             return _fullPath;
         }
 
-        // public string GetContent()
-        // {
-        //     string resultStr = "";
-        //
-        //     DirectoryInfo[] directories = _directory.GetDirectories();
-        //     FileInfo[] files = _directory.GetFiles();
-        //     
-        //     directories = directories.Where(d => !d.Attributes.HasFlag(FileAttributes.Hidden)).ToArray();
-        //     files = files.Where(f => !f.Attributes.HasFlag(FileAttributes.Hidden)).ToArray();
-        //     
-        //     foreach (var directory in directories)
-        //     {
-        //         resultStr += $"{directory.CreationTime}\t<DIR>\t{directory.Name}\n";
-        //     }
-        //
-        //     foreach (var file in files)
-        //     {
-        //         resultStr += $"{file.CreationTime}\t{file.Length}\t{file.Name}\n";
-        //     }
-        //     
-        //     resultStr += $"\t{files.Length} files\n";
-        //     resultStr += $"\t{directories.Length} folders";
-        //     
-        //     return resultStr;
-        // }
-
         public string GetContent(string[] flags)
         {
             string resultStr = "";
