@@ -27,7 +27,7 @@ namespace FileManager
                 }
             }
             
-            command = matchesArray[0].Value;
+            command = matchesArray[0].Value.ToLower();
             arguments = new string[argumentsCounter];
             flags = new string[flagsCounter];
 
@@ -49,7 +49,7 @@ namespace FileManager
                 }
                 else
                 {
-                    flags[flagsCounter] = matchesArray[i].Value.Substring(1);
+                    flags[flagsCounter] = matchesArray[i].Value.Substring(1).ToLower();
                     flagsCounter++;
                 }
 
