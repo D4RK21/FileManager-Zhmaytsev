@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -52,6 +53,23 @@ namespace FileManager
                     flagsCounter++;
                 }
 
+            }
+        }
+
+        public static string CheckPath(string path, string directory)
+        {
+            if (!path.Contains(':'))
+            {
+                path = Path.Combine(directory, path);
+            }
+
+            if (Directory.Exists(path) || File.Exists(path))
+            {
+                return path;
+            }
+            else
+            {
+                return "";
             }
         }
         
