@@ -1,23 +1,42 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace FileManager
 {
     public class MyFile : IDisposable
     {
-        private string _name;
-        private long _size;
-        private DateTime _dateCreated;
-        private DateTime _dateUpdated;
+        private readonly FileInfo _file;
+        private readonly string _name;
+        private readonly string _fullPath;
+        private readonly long _size;
+        private readonly DateTime _dateCreated;
+        private readonly DateTime _dateUpdated;
 
-        public MyFile(FileInfo fileInfo)
+        public MyFile(string path)
         {
-            _name = fileInfo.Name;
-            _size = fileInfo.Length;
-            _dateCreated = fileInfo.CreationTime;
-            _dateUpdated = fileInfo.LastWriteTime;
+            _file = new FileInfo(path);
+            _name = _file.Name;
+            _fullPath = _file.FullName;
+            _size = _file.Length;
+            _dateCreated = _file.CreationTime;
+            _dateUpdated = _file.LastWriteTime;
         }
-        
+
+        public string View(int maxCount)
+        {
+            char[] buffer = new char[maxCount];
+
+            using var stream = File.OpenRead(_fullPath);
+            using var reader = new StreamReader(_fullPath, Encoding.UTF8);
+            
+            reader.Read(buffer, 0, maxCount);
+
+            var resultStr = new string(buffer);
+            return resultStr;
+        }
+
         public void Dispose()
         {
             Console.WriteLine("File object has been disposed!");    
