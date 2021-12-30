@@ -24,7 +24,7 @@ namespace FileManager
                 
                 Helper.ParseInputString(inputText, out var inputCommand,out var inputArguments, out var inputFlags);
 
-                if (inputCommand is "view" or "find" or "cd" or "del")
+                if (inputCommand is "view" or "find" or "cd" or "del" or "ren")
                 {
                     inputArguments[0] = Helper.CheckPath(inputArguments[0], currentDirectory.GetFullPath());
                     if (inputArguments[0] == "")
@@ -71,7 +71,13 @@ namespace FileManager
                         response = currentDirectory.Delete(inputArguments[0]);
                         Console.WriteLine(response
                             ? "Successfully deleted!"
-                            : "Object does not existed!");
+                            : "Object does not exist!");
+                        break;
+                    case "ren":
+                        response = currentDirectory.Rename(inputArguments[0], inputArguments[1]);
+                        Console.WriteLine(response
+                            ? "Successfully renamed!"
+                            : "Object does not exist!");
                         break;
                     default:
                         Console.WriteLine("Command not found!");

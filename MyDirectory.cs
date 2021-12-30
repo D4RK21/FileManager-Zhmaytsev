@@ -163,12 +163,33 @@ namespace FileManager
                 File.Delete(path);
                 return true;
             }
+            
             if (Directory.Exists(path))
             {
                 Directory.Delete(path, true);
                 return true;
             }
             
+            return false;
+        }
+
+        public bool Rename(string oldName, string newName)
+        {
+            oldName = Path.Combine(_fullPath, oldName);
+            newName = Path.Combine(_fullPath, newName);
+            
+            if (File.Exists(oldName))
+            {
+                File.Move(oldName, newName);
+                return true;
+            }
+
+            if (Directory.Exists(oldName))
+            {
+                Directory.Move(oldName, newName);
+                return true;
+            }
+
             return false;
         }
         
