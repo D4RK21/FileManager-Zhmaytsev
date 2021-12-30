@@ -37,6 +37,13 @@ namespace FileManager
             return resultStr;
         }
 
+        public bool IsSubstrExistInFile(string substr)
+        {
+            string[] readText = File.ReadAllLines(_fullPath, Encoding.UTF8);
+
+            return readText.Any(s => s.Contains(substr));
+        }
+
         public void Dispose()
         {
             Console.WriteLine("File object has been disposed!");    
