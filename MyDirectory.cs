@@ -130,6 +130,18 @@ namespace FileManager
             
             return resultStr;
         }
+
+        public string MakeDirectory(string name)
+        {
+            var pathToNewDir = Path.Combine(_fullPath, name);
+
+            if (!Directory.Exists(pathToNewDir))
+            {
+                Directory.CreateDirectory(pathToNewDir);
+            }
+            
+            return pathToNewDir;
+        }
         
         public void Dispose()
         {

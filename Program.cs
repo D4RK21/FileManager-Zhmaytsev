@@ -55,6 +55,11 @@ namespace FileManager
                         currentDirectory.Dispose();
                         currentDirectory = new MyDirectory(inputArguments[0]);
                         break;
+                    case "mkdir":
+                        var pathToNewDir = currentDirectory.MakeDirectory(inputArguments[0]);
+                        currentDirectory.Dispose();
+                        currentDirectory = new MyDirectory(pathToNewDir);
+                        break;
                     default:
                         Console.WriteLine("Command not found!");
                         break;
