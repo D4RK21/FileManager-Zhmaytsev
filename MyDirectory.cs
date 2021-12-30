@@ -142,6 +142,19 @@ namespace FileManager
             
             return pathToNewDir;
         }
+
+        public bool MakeFile(string name)
+        {
+            var pathToNewFile = Path.Combine(_fullPath, name);
+
+            if (File.Exists(pathToNewFile))
+            {
+                return false;
+            }
+            
+            File.Create(pathToNewFile);
+            return true;
+        }
         
         public void Dispose()
         {

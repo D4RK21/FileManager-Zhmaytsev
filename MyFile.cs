@@ -28,7 +28,7 @@ namespace FileManager
         {
             char[] buffer = new char[maxCount];
 
-            using var stream = File.OpenRead(_fullPath);
+            // using var stream = File.OpenRead(_fullPath);
             using var reader = new StreamReader(_fullPath, Encoding.UTF8);
             
             reader.Read(buffer, 0, maxCount);

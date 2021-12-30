@@ -60,6 +60,12 @@ namespace FileManager
                         currentDirectory.Dispose();
                         currentDirectory = new MyDirectory(pathToNewDir);
                         break;
+                    case "mkfile":
+                        var response = currentDirectory.MakeFile(inputArguments[0]);
+                        Console.WriteLine(response
+                            ? $"File {inputArguments[0]} successfully created!"
+                            : "File already exist!");
+                        break;
                     default:
                         Console.WriteLine("Command not found!");
                         break;
