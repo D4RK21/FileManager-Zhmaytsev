@@ -26,3 +26,8 @@ File manager supports **absolute** and **relative** paths!
 
 ## 👨‍💻 Author
 * Mikhail Zhmaytsev ([**D4RK21**](https://github.com/D4RK21))
+
+## 💻 Other projects:
+* [**Sets Calculator**](https://github.com/D4RK21/SetsCalculator)
+* [**Boolean Algebra Calculator**](https://github.com/D4RK21/BooleanAlgebraCalculator)
+* [**Permutations And Combinations**](https://github.com/D4RK21/PermutationsAndCombinations)
