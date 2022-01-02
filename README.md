@@ -21,11 +21,22 @@ File manager supports **absolute** and **relative** paths!
 
 ##  ⚙️ Commands
 
-![image](https://user-images.githubusercontent.com/81447820/147828819-99aef28f-a6c1-487c-adcc-c20f9c8053d3.png)
+* **dir** — Outputting directory content
+  * flag "**-h**" for showing hidden files
+  * flag "**-sn**" for sorting by name
+  * flag "**-sl**" for sorting by size
+  * flag "**-sd**" for sorting by time
+  * flag "**-t**" for outputting in the form of tree
+* **view** — View first 200 symbols of file content
+* **find** — Is substring exist in file
+* **mkdir** — Make directory
+* **mkfile** — Make file
+* **del** — Delete directory or file
+* **ren** — Make Rename directory or file
 
 
 ## 👨‍💻 Author
-* Mikhail Zhmaytsev ([**D4RK21**](https://github.com/D4RK21))
+*Mikhail Zhmaytsev* ([**D4RK21**](https://github.com/D4RK21))
 
 ## 💻 Other projects:
 * [**Sets Calculator**](https://github.com/D4RK21/SetsCalculator)
