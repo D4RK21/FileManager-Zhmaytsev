@@ -120,6 +120,7 @@ namespace FileManager
             }
 
             using var file = File.Create(pathToNewFile);
+            
             return true;
         }
 
@@ -130,12 +131,14 @@ namespace FileManager
             if (File.Exists(path))
             {
                 File.Delete(path);
+                
                 return true;
             }
 
             if (Directory.Exists(path))
             {
                 Directory.Delete(path, true);
+                
                 return true;
             }
 
@@ -150,12 +153,14 @@ namespace FileManager
             if (File.Exists(oldName))
             {
                 File.Move(oldName, newName);
+                
                 return true;
             }
 
             if (Directory.Exists(oldName))
             {
                 Directory.Move(oldName, newName);
+                
                 return true;
             }
 
