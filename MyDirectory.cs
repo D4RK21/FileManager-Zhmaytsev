@@ -23,7 +23,7 @@ namespace FileManager
 
         public string GetContent(string[] flags)
         {
-            string resultStr = "";
+            string resultStr = string.Empty;
             long allFilesSize = 0;
 
             DirectoryInfo[] directories = _directory.GetDirectories();

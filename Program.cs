@@ -28,7 +28,7 @@ namespace FileManager
                 if (inputCommand is "view" or "find" or "cd" or "del" or "ren")
                 {
                     inputArguments[0] = Helper.CheckPath(inputArguments[0], currentDirectory.GetFullPath());
-                    if (inputArguments[0] == "")
+                    if (inputArguments[0] == string.Empty)
                     {
                         Console.WriteLine("Invalid path!");
                         continue;

@@ -65,7 +65,7 @@ namespace FileManager
                 return path;
             }
 
-            return "";
+            return string.Empty;
         }
 
         public static void DisplayHelp()
