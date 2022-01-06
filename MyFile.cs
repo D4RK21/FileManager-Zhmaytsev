@@ -30,9 +30,16 @@ namespace FileManager
 
         public bool IsSubstrExistInFile(string substr)
         {
-            string[] readText = File.ReadAllLines(_fullPath, Encoding.UTF8);
+            if (_file.Exists)
+            {
+                string[] readText = File.ReadAllLines(_fullPath, Encoding.UTF8);
 
-            return readText.Any(s => s.Contains(substr));
+                return readText.Any(s => s.Contains(substr));
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void Dispose()

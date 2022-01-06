@@ -19,6 +19,21 @@ namespace UnitTest
             // Assert
             Assert.Contains(expected, actual);
         }
+        
+        [Fact]
+        public void GetContent_That_Doesnt_Contain()
+        {
+            // Arrange
+            var directory = new MyDirectory(@"../../../../");
+            var flags = new string[] { };
+            var expected = "z1z2z3";
+            
+            // Act
+            var actual = directory.GetContent(flags);
+
+            // Assert
+            Assert.DoesNotContain(expected, actual);
+        }
 
         [Fact]
         public void GetContent_With_Flags()
@@ -36,6 +51,21 @@ namespace UnitTest
         }
         
         [Fact]
+        public void GetContent_With_Flags_That_Doesnt_Contain()
+        {
+            // Arrange
+            var directory = new MyDirectory(@"../../../../");
+            var flags = new string[] { "t" };
+            var expected = "z1z2z3z";
+            
+            // Act
+            var actual = directory.GetContent(flags);
+
+            // Assert
+            Assert.DoesNotContain(expected, actual);
+        }
+        
+        [Fact]
         public void ViewFile()
         {
             // Arrange
@@ -50,6 +80,20 @@ namespace UnitTest
         }
         
         [Fact]
+        public void ViewFile_That_Doesnt_Contain()
+        {
+            // Arrange
+            var file = new MyFile(@"../../../../Program.cs");
+            var expected = "z1z2z3";
+            
+            // Act
+            var actual = file.View(200);
+
+            // Assert
+            Assert.DoesNotContain(expected, actual);
+        }
+        
+        [Fact]
         public void Find_SubString_In_File()
         {
             // Arrange
@@ -60,6 +104,18 @@ namespace UnitTest
 
             // Assert
             Assert.True(result);
+        }
+
+        [Fact] public void Find_SubString_In_File_That_Doesnt_Exist()
+        {
+            // Arrange
+            var file = new MyFile(@"../../../../Program.csdd");
+            
+            // Act
+            var result = file.IsSubstrExistInFile("using System;");
+
+            // Assert
+            Assert.False(result);
         }
 
         [Fact]
