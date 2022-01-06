@@ -41,7 +41,7 @@ namespace FileManager
                 files = files.OrderBy(s => s.Name).ToArray();
             }
 
-            if (flags.Contains("ss"))
+            if (flags.Contains("sl"))
             {
                 files = files.OrderBy(s => s.Length).ToArray();
             }
@@ -54,40 +54,11 @@ namespace FileManager
 
             if (flags.Contains("t"))
             {
-                foreach (var directory in directories)
-                {
-                    resultStr +=
-                        $"<DIR> {directory.Name}\n\t— Creation time: {directory.CreationTime}\n\t— Last update: {directory.LastWriteTime}\n";
-                }
-
-                resultStr += "\n";
-
-                foreach (var file in files)
-                {
-                    resultStr +=
-                        $"{file.Name}\n\t— Size: {file.Length}\n\t— Extension: {file.Extension}\n\t— Creation time: {file.CreationTime}\n\t— Last update: {file.LastWriteTime}\n";
-
-                    if (file.Extension is ".jpg" or ".png" or ".bmp" or ".gif" or ".tif")
-                    {
-                        var bmp = new Bitmap(file.FullName);
-                        resultStr += $"\t— Resolution: {bmp.Width} x {bmp.Height}\n";
-                    }
-
-                    allFilesSize += file.Length;
-                }
+                Helper.GetContentInTreeForm(directories, files, out resultStr, out allFilesSize);
             }
             else
             {
-                foreach (var directory in directories)
-                {
-                    resultStr += $"{directory.LastWriteTime}\t<DIR>\t{directory.Name}\n";
-                }
-
-                foreach (var file in files)
-                {
-                    resultStr += $"{file.LastWriteTime}\t{file.Length}\t{file.Name}\n";
-                    allFilesSize += file.Length;
-                }
+                Helper.GetContentInDefaultForm(directories, files, out resultStr, out allFilesSize);
             }
 
             resultStr += $"{files.Length} files";

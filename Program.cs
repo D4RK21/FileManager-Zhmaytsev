@@ -35,54 +35,7 @@ namespace FileManager
                     }
                 }
 
-                bool response;
-                switch (inputCommand)
-                {
-                    case "dir":
-                        Console.WriteLine(currentDirectory.GetContent(inputFlags));
-                        break;
-                    case "view":
-                        using (var file = new MyFile(inputArguments[0]))
-                        {
-                            Console.WriteLine(file.View(200));
-                        }
-                        break;
-                    case "find":
-                        using (var file = new MyFile(inputArguments[0]))
-                        {
-                            Console.WriteLine(file.IsSubstrExistInFile(inputArguments[1]));
-                        }
-                        break;
-                    case "cd":
-                        currentDirectory.Dispose();
-                        currentDirectory = new MyDirectory(inputArguments[0]);
-                        break;
-                    case "mkdir":
-                        var pathToNewDir = currentDirectory.MakeDirectory(inputArguments[0]);
-                        currentDirectory.Dispose();
-                        currentDirectory = new MyDirectory(pathToNewDir);
-                        break;
-                    case "mkfile":
-                        response = currentDirectory.MakeFile(inputArguments[0]);
-                        Console.WriteLine(response
-                            ? $"File {inputArguments[0]} successfully created!"
-                            : "File already exist!");
-                        break;
-                    case "del":
-                        response = currentDirectory.Delete(inputArguments[0]);
-                        Console.WriteLine(response ? "Successfully deleted!" : "Object does not exist!");
-                        break;
-                    case "ren":
-                        response = currentDirectory.Rename(inputArguments[0], inputArguments[1]);
-                        Console.WriteLine(response ? "Successfully renamed!" : "Object does not exist!");
-                        break;
-                    case "help":
-                        Helper.DisplayHelp();
-                        break;
-                    default:
-                        Console.WriteLine("Command not found!");
-                        break;
-                }
+                currentDirectory = Helper.RunCommand(currentDirectory, inputCommand, inputArguments, inputFlags);
             }
         }
     }
